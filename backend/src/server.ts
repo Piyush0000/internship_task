@@ -20,6 +20,11 @@ app.get('/health', (_req, res) => {
   res.json({ status: 'ok' });
 });
 
+// Debug route to check if routes are loaded
+app.get('/api', (_req, res) => {
+  res.json({ message: 'API routes are mounted', routes: ['/api/auth', '/api/tasks'] });
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/tasks', taskRoutes);
 
