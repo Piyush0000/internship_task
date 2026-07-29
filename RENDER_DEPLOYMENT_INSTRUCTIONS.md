@@ -38,7 +38,7 @@ Scroll down to "Environment Variables" and add these:
 
 1. **MONGODB_URI**:
    - Key: `MONGODB_URI`
-   - Value: `mongodb+srv://rathorepiyush0000_db_user:Mwh2nBWfKwu8QwZX@cluster0.jrypkhv.mongodb.net/todoapp?retryWrites=true&w=majority`
+   - Value: Your MongoDB Atlas connection string (get from MongoDB Atlas dashboard)
 
 2. **JWT_SECRET**:
    - Key: `JWT_SECRET`
