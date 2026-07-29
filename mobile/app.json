@@ -3,7 +3,11 @@
     "name": "TodoFlow",
     "slug": "todo-flow",
     "scheme": "todoflow",
-    "platforms": ["ios", "android", "web"],
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "sdkVersion": "50.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
     "android": {
@@ -11,8 +15,9 @@
     },
     "extra": {
       "eas": {
-        "projectId": "00000000-0000-0000-0000-000000000000"
+        "projectId": "f48b0047-64a3-46ff-bcde-2a92720a1112"
       }
-    }
+    },
+    "owner": "piyush220506"
   }
 }
