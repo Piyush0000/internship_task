@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Exec(npm install)",
+      "Exec(npm view)",
+      "Exec(npm run)",
+      "Exec(sc query)",
+      "Exec(curl)",
+      "Exec(netstat)",
+      "Exec(taskkill)",
+      "Exec(mkdir)",
+      "Exec(npx expo)",
+      "Exec(npm uninstall)",
+      "Exec(rmdir)",
+      "Exec(rm)",
+      "Exec(npx)",
+      "Exec(cp)",
+      "Exec(findstr)",
+      "Exec(Remove-Item)"
+    ]
+  }
+}

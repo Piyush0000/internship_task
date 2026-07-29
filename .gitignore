@@ -1,0 +1,64 @@
+# Node modules
+node_modules/
+
+# Expo and React Native
+.expo/
+.expo-shared/
+**/android/
+**/ios/
+**/web-build/
+**/.expo/
+**/.expo-shared/
+**/dist/
+**/build/
+
+# Metro cache
+metro-cache/
+
+# Expo CLI
+.expo/settings.json
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment files
+.env
+.env.*
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Package lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# IDE scratch / local config
+.idea/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Built app packages
+*.apk
+*.aab
+*.ipa
+
+# Uploads/uploads cache
+uploads/
+
+# Generated files
+*.log
+
+# Ignore fixed project folder if it is not part of repo
+/todo-fixed/
