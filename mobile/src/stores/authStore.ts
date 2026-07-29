@@ -28,16 +28,28 @@ export const useAuthStore = create<AuthState>((set) => ({
   isAuthenticated: false,
   loading: true,
   login: async (email, password) => {
-    const response = await axios.post(`${API_URL}/api/auth/login`, { email, password });
-    const { accessToken, user } = response.data;
-    await SecureStore.setItemAsync('token', accessToken);
-    set({ user, token: accessToken, isAuthenticated: true, loading: false });
+    try {
+      console.log('Attempting login to:', `${API_URL}/api/auth/login`);
+      const response = await axios.post(`${API_URL}/api/auth/login`, { email, password });
+      const { accessToken, user } = response.data;
+      await SecureStore.setItemAsync('token', accessToken);
+      set({ user, token: accessToken, isAuthenticated: true, loading: false });
+    } catch (error: any) {
+      console.error('Login error:', error?.response?.data || error?.message);
+      throw error;
+    }
   },
   register: async (email, password, name?: string) => {
-    const response = await axios.post(`${API_URL}/api/auth/register`, { email, password, name });
-    const { accessToken, user } = response.data;
-    await SecureStore.setItemAsync('token', accessToken);
-    set({ user, token: accessToken, isAuthenticated: true, loading: false });
+    try {
+      console.log('Attempting registration to:', `${API_URL}/api/auth/register`);
+      const response = await axios.post(`${API_URL}/api/auth/register`, { email, password, name });
+      const { accessToken, user } = response.data;
+      await SecureStore.setItemAsync('token', accessToken);
+      set({ user, token: accessToken, isAuthenticated: true, loading: false });
+    } catch (error: any) {
+      console.error('Registration error:', error?.response?.data || error?.message);
+      throw error;
+    }
   },
   logout: async () => {
     await SecureStore.deleteItemAsync('token');
