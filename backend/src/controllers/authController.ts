@@ -118,8 +118,9 @@ export const updateMe = async (req: Request, res: Response) => {
 export const uploadAvatar = async (req: Request, res: Response) => {
   try {
     const userId = (req as any).userId;
-    if (!req.file) return res.status(400).json({ message: 'No file uploaded' });
-    const filename = req.file.filename || req.file.originalname;
+    const file = req.file as Express.Multer.File;
+    if (!file) return res.status(400).json({ message: 'No file uploaded' });
+    const filename = file.filename || file.originalname;
     const url = `${req.protocol}://${req.get('host')}/uploads/${filename}`;
     const user = await User.findByIdAndUpdate(userId, { avatarUrl: url }, { new: true }).select('-passwordHash');
     return res.json({ avatarUrl: url, user });
