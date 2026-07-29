@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Pressable, TextInput, Alert, Modal, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import * as Sharing from 'expo-sharing';
 import { useAuthStore } from '../../src/stores/authStore';
 import { useTaskStore } from '../../src/stores/taskStore';
 import { colors, spacing } from '../../src/constants/theme';
@@ -37,6 +38,29 @@ export default function TasksScreen() {
     setDueDateTime('');
     setPriority('medium');
     setShowModal(false);
+  };
+
+  const handleDownloadTask = async (task: TaskItem) => {
+    try {
+      const taskText = `
+Task: ${task.title}
+Description: ${task.description || 'No description'}
+Priority: ${task.priority}
+Status: ${task.status}
+Due Date: ${task.dueDateTime ? new Date(task.dueDateTime).toLocaleString() : 'Not set'}
+      `.trim();
+      
+      const filename = `task-${task._id}.txt`;
+      const fileUri = `file://${filename}`;
+      
+      await Sharing.shareAsync(taskText, {
+        mimeType: 'text/plain',
+        dialogTitle: 'Share task details'
+      });
+    } catch (error) {
+      console.error('Share error:', error);
+      Alert.alert('Share failed', 'Unable to share task details');
+    }
   };
 
   return (
@@ -88,6 +112,9 @@ export default function TasksScreen() {
               </Pressable>
               <Pressable onPress={() => deleteTask(item._id)} style={styles.iconButton}>
                 <Text>✕</Text>
+              </Pressable>
+              <Pressable onPress={() => handleDownloadTask(item)} style={styles.iconButton}>
+                <Text>⬇</Text>
               </Pressable>
             </View>
           </View>

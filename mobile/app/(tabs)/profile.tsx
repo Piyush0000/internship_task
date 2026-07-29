@@ -3,9 +3,10 @@ import { View, Text, StyleSheet, Pressable, TextInput, Image, Alert, ScrollView,
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
 import { useAuthStore, updateProfile } from '../../src/stores/authStore';
+import { useTaskStore } from '../../src/stores/taskStore';
 import { colors, spacing } from '../../src/constants/theme';
 
-const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://192.168.1.8:5000';
+const API_URL = process.env.EXPO_PUBLIC_API_URL || 'https://internship-task-7bqo.onrender.com';
 
 export default function ProfileScreen() {
   const { user, logout } = useAuthStore();
@@ -45,28 +46,40 @@ export default function ProfileScreen() {
 
   const handlePickImage = async () => {
     try {
+      console.log('Starting image pick...');
       const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (!perm.granted) return Alert.alert('Permission required', 'Allow access to your photo library to choose an avatar.');
+      
       const result = await ImagePicker.launchImageLibraryAsync({ mediaTypes: ImagePicker.MediaTypeOptions.Images, quality: 0.7 });
       if (result.canceled) return;
+      
       const localUri = result.assets?.[0]?.uri;
       if (!localUri) return;
+      
+      console.log('Image selected:', localUri);
       const filename = localUri.split('/').pop() || 'avatar.jpg';
       const match = /\.([0-9a-z]+)(?:[?#]|$)/i.exec(filename);
       const type = match ? `image/${match[1]}` : 'image/jpeg';
+      
       const form = new FormData();
       // @ts-ignore
       form.append('avatar', { uri: localUri, name: filename, type });
+      
       const token = (useAuthStore.getState().token) as string;
+      console.log('Uploading to:', `${API_URL}/api/auth/avatar`);
+      
       const response = await axios.post(`${API_URL}/api/auth/avatar`, form, {
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
       });
+      
+      console.log('Upload response:', response.data);
       const updatedUrl = response.data.avatarUrl || response.data.user?.avatarUrl;
       setAvatarUrl(updatedUrl);
       useAuthStore.setState({ user: response.data.user });
-    } catch (err) {
-      console.error(err);
-      Alert.alert('Upload failed', 'Unable to upload the selected avatar.');
+      Alert.alert('Success', 'Avatar uploaded successfully!');
+    } catch (err: any) {
+      console.error('Image upload error:', err);
+      Alert.alert('Upload failed', err?.response?.data?.message || err?.message || 'Unable to upload the selected avatar.');
     }
   };
 
@@ -153,6 +166,6 @@ const styles = StyleSheet.create({
   buttonText: { color: '#fff', fontWeight: '700', fontSize: 16 },
   secondaryButton: { marginTop: spacing.md, paddingVertical: spacing.md, borderRadius: 18, alignItems: 'center', borderWidth: 1, borderColor: colors.primary, backgroundColor: '#fff' },
   secondaryText: { color: colors.primary, fontWeight: '700', fontSize: 16 },
-  logoutButton: { backgroundColor: colors.danger, marginTop: spacing.md },
+  logoutButton: { backgroundColor: '#EF4444', marginTop: spacing.md },
   logoutText: { color: '#fff', fontWeight: '700' }
 });
