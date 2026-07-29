@@ -20,7 +20,7 @@ interface AuthState {
   hydrate: () => Promise<void>;
 }
 
-const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://192.168.1.8:5000';
+const API_URL = process.env.EXPO_PUBLIC_API_URL || 'https://internship-task-7bqo.onrender.com';
 
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
