@@ -237,6 +237,11 @@ eas build --platform android --profile preview
 
 The latest release APK can be downloaded from the [Releases section](../../releases).
 
+### Current Version
+- **v1.0.0** - TodoFlow-v1.0.0.apk
+- **Backend**: https://internship-task-7bqo.onrender.com
+- **Status**: ✅ Live and operational
+
 ## 🤝 Contributing
 
 1. Fork the repository
