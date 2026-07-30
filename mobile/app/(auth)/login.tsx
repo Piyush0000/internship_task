@@ -7,14 +7,20 @@ import { colors, spacing } from '../../src/constants/theme';
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuthStore();
 
   const handleLogin = async () => {
+    if (isLoading) return;
+    
     try {
+      setIsLoading(true);
       await login(email, password);
       router.replace('/');
     } catch (error) {
       Alert.alert('Login failed', 'Please check your credentials and try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -30,8 +36,8 @@ export default function LoginScreen() {
         <TextInput style={styles.input} placeholder="Email" placeholderTextColor={colors.muted} value={email} onChangeText={setEmail} autoCapitalize="none" keyboardType="email-address" />
         <TextInput style={styles.input} placeholder="Password" placeholderTextColor={colors.muted} value={password} onChangeText={setPassword} secureTextEntry />
 
-        <Pressable style={styles.button} onPress={handleLogin}>
-          <Text style={styles.buttonText}>Login</Text>
+        <Pressable style={[styles.button, isLoading && styles.buttonDisabled]} onPress={handleLogin} disabled={isLoading}>
+          <Text style={styles.buttonText}>{isLoading ? 'Logging in...' : 'Login'}</Text>
         </Pressable>
 
         <Link href="/register" style={styles.link}>Create an account</Link>
@@ -49,6 +55,7 @@ const styles = StyleSheet.create({
   subtitle: { fontSize: 16, color: colors.muted, marginBottom: spacing.lg, lineHeight: 24 },
   input: { borderWidth: 1, borderColor: colors.border, borderRadius: 18, padding: spacing.md, marginBottom: spacing.md, fontSize: 16, color: colors.text, backgroundColor: '#FFFFFF' },
   button: { backgroundColor: colors.primary, paddingVertical: spacing.md, borderRadius: 18, alignItems: 'center', marginTop: spacing.sm, shadowColor: colors.primary, shadowOpacity: 0.18, shadowRadius: 16, shadowOffset: { width: 0, height: 10 }, elevation: 8 },
+  buttonDisabled: { opacity: 0.6 },
   buttonText: { color: '#fff', fontSize: 16, fontWeight: '700' },
   link: { marginTop: spacing.md, alignSelf: 'center', color: colors.accent2, fontWeight: '700' }
 });

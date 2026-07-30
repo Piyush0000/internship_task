@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Pressable, TextInput, Alert, Modal, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Sharing from 'expo-sharing';
+import * as FileSystem from 'expo-file-system';
 import { useAuthStore } from '../../src/stores/authStore';
 import { useTaskStore } from '../../src/stores/taskStore';
 import { colors, spacing } from '../../src/constants/theme';
@@ -51,9 +52,11 @@ Due Date: ${task.dueDateTime ? new Date(task.dueDateTime).toLocaleString() : 'No
       `.trim();
       
       const filename = `task-${task._id}.txt`;
-      const fileUri = `file://${filename}`;
+      const fileUri = FileSystem.documentDirectory + filename;
       
-      await Sharing.shareAsync(taskText, {
+      await FileSystem.writeAsStringAsync(fileUri, taskText, { encoding: FileSystem.EncodingType.UTF8 });
+      
+      await Sharing.shareAsync(fileUri, {
         mimeType: 'text/plain',
         dialogTitle: 'Share task details'
       });

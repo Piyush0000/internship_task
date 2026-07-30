@@ -16,7 +16,32 @@
       "Exec(npx)",
       "Exec(cp)",
       "Exec(findstr)",
-      "Exec(Remove-Item)"
+      "Exec(Remove-Item)",
+      "Exec(gradlew)",
+      "Exec(gradlew.bat)",
+      "Exec(./gradlew)",
+      "Exec(\"./gradlew.bat\")",
+      "Exec(set)",
+      "Exec(sdkmanager)",
+      "Exec(find)",
+      "Exec(git status)",
+      "Exec(git add)",
+      "Exec(git commit)",
+      "Exec(gh)",
+      "Exec(git log)",
+      "Exec(cat)",
+      "Exec(git push)",
+      "Exec(git branch)",
+      "Exec(test)",
+      "Exec(touch)",
+      "Exec(git init)",
+      "Exec(git remote)",
+      "Exec(git reset)",
+      "Exec(git rm)",
+      "Exec(ls)",
+      "Exec(git show)",
+      "Exec(dir)",
+      "Exec(ping)"
     ]
   }
 }

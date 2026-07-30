@@ -13,6 +13,8 @@ export default function RegisterScreen() {
   const { register } = useAuthStore();
 
   const handleRegister = async () => {
+    if (submitting) return;
+    
     if (password !== confirmPassword) {
       Alert.alert('Passwords do not match');
       return;
